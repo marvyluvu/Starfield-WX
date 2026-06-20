@@ -139,17 +139,18 @@ Feel free to tweak the threshold and LED colors to match your local climate and 
 
 The full detailed BOM is included in this repository:
 
-- [`/ORBITZ_BILL_OF_MATERIALS.csv`](https://github.com/marvyluvu/ORBITZ/blob/main/hardware/BOM.csv)
+- [[`/STARFIELD_BILL_OF_MATERIALS.csv`](https://github.com/marvyluvu/Starfield-WX/blob/69a2b140c6205f69048c935fe2e7507fc950f91d/hardware/STARFIELD_BOM.csv)
 
 You can open this file in Excel, Google Sheets, or any spreadsheet tool.
 It includes part names, descriptions, quantities, prices, and direct purchase links.
 
 Key components
 
-| Product name          | Description                                      | Qty |
-|-----------------------|--------------------------------------------------|-----|
-| Raspberry Pi Zero 2W  | Main computer, runs satellite tracking software  | 1   |
-| 2.4" NO TOUCH ILI9341| SPI LCD display for Orbitz radar UI              | 1   |
-| WS2812B LED STRIP     | Internal RGB status lighting (1 m)              | 1   |
-| RTL‑SDR USB dongle    | ADS‑B receiver for local aircraft (dump1090)    | 1   |
-| USB GPS dongle (VK‑172 or similar) | Provides live GPS position via GPSD | 1   |
+| Product name          | Description                                 | Qty |
+| --------------------- | ------------------------------------------- | --- |
+| Arduino Uno           | Main microcontroller board                  | 1   |
+| STARFIELD custom PCB  | Shield that holds all weather‑station parts | 1   |
+| DHT11 module          | Temperature and humidity sensor             | 1   |
+| 1602A LCD display     | 16×2 character display for readings         | 1   |
+| WS2812B LED strip     | RGB halo to show dew‑risk color             | 1   |
+| Trimmer potentiometer | Adjusts LCD contrast                        | 1   |
