@@ -1,18 +1,20 @@
 <h1 align="center">StarField WX</h1>
 
-
+<img width="1410" height="2000" alt="starfield" src="https://github.com/user-attachments/assets/0497373b-94ad-4294-acd0-bd4dcab92ebc" />
 
 
 <p align="center">
-  <i>Desktop satellite, plane, and ISS tracker with a Console-style display and LED halo.</i>
+<i>Portable Arduino‑powered dew‑risk weather station with LCD and LED halo.</i>
 </p>
+
+
 
 ---
 
-##  1. What is ORBITZ
+##  1. What is STARFIELD WX?
 
 <p>
-Orbit is a desktop satellite, plane, and ISS tracker with a radar-style display, LED halo, live ADS-B plane data, and GPS aware tracking
+Starfield WX is a pocket-sized weather station that tells you when dew is about to become a problem for stargazing/ astrophotography.
 </p>
 
 ---
@@ -20,21 +22,21 @@ Orbit is a desktop satellite, plane, and ISS tracker with a radar-style display,
 ##  2. Why did I make it?
 
 <p>
-I personally love astronomy and being able to stargaze outside with the stars, but I could never catch a satellite or the ISS due to how fast they orbit, so when I heard of FALLOUT by hackclub, I saw this as the perfect opportunity to work and bring my idea to life!!
-</p>
+I Love being outside with my telescope, but because of where I live, I always end up with dew messing up my session before I could photograph anything. Starfield WX is my companion project for ORBTIZ. it can warn you about dew forming before it ruins your session.
 
 ---
 
 ##  3. How does it work?
 
 <p>
-The brains of the operation is a Raspberry Pi Zero 2W. 
+The brains of the operation is the arduino uno. 
     It:
+Reads temperature and humidity from a DHT11 module.
+Calculates an approximate dew point from those readings.
+Classifies dew risk (LOW, MEDIUM, HIGH) based on the spread between temperature and dew point.
+Shows live values on a 16×2 character LCD while auto‑cycling between temperature, humidity, and dew‑point screens.
+Uses a WS2812B LED halo as a status ring: green for low risk, orange for medium, red when dew is imminent.
 
-    Fetches TLEs from CelesTrak and uses Skyfield to compute live satellite and ISS passes.
-    Reads your location from GPSD (USB GPS) or falls back to a configured location.
-    Receives live ADS‑B aircraft data either from a local RTL‑SDR + dump1090 or from the OpenSky API.
-    The display shows a radar view, the LED halo indicates visibility, and the buzzer alerts you before passes so you don’t miss them.
 </p>
 
 ---
@@ -44,7 +46,19 @@ The brains of the operation is a Raspberry Pi Zero 2W.
 <p>
 You can view the full schematic for the ORBITZ PCB below.
   
-![ORBITZ schematic](hardware/orbitz_schematic.svg)
+
+The custom STARFIELD pcb plugs directly onto an Arduino Uno and breaks out all parts needed for weather station
+
+key pins:
+DHT11 data -> Arduino digital pin 2
+WS2812B LED strip -> Arduino digital pin 6
+1602 LCD (parallel) -> Arduino digital pins 7–12
+Trimmer potentiometer -> LCD contrast
+Series resistors for the LCD backlight and LED strip data line
+
+you can view the full schematic here.
+![STARFIELD schematic](hardware/starfield_schem.svg)
+
 </p>
 
 ---
@@ -52,68 +66,49 @@ You can view the full schematic for the ORBITZ PCB below.
 ##  5. How do you use it?
 
 <p>
-Plug it into usb c, Connect it to wifi, and it shows satellites and planes passing over your location
-using the rotary dial and the button, you can scroll through targets and select them
 
-If you plug in the USB GPS AND SDR DONGLE, Orbitz will automagically :
-use gpsd for your location
-use live ADS-B data from planes flying nearby for fully local tracking (or fall back to Opensky if no receiver is present)
 </p>
 
 Assembly:
+Power on the arduino uno via USB or a **5v** supply ( you can also power it using the usb hub on orbitz!!)
+StarField WX boots, then starts cycling through three screens on the LCD:
+  - Temperature in C
+  - Relative humiditry in %
+  - Dew point in C
+The led halo color shows dew risk : green (low), orange ( medium), red (high)
+when it turns red, conditions are close to the dew point and you should protect your optics or wrap up the session , unfortunately :( 
 
-1. First print the enclosure, and order all the items in the BOM.
-2. Insert heat inserts in all screw standoffs.
-3. insert battery into pcb.
-4. insert pcb into enclosure, and make sure the battery is UNDER the pcb.
-5. screw in pcb board.
-6. attach screen with screws (MAKE SURE ITS ORIENTED PROPERLY with the row of pins pointing upwards
-7. insert joystick and wire to the pcb
-8. cut rgb strip to size, then stick near the top of the enclosure.
-9. wire rgb strip to pcb board.
-10. Attach acrylic lid and back.
-11. using super glue, attach the usb hub to the slot.
-12. connect both the GPS and SDR dongle to the usb hub.
-13. connect to power, flash firmware and enjoy!
 
 ## ASSEMBLED DESIGN 
 Below is what your fully assembled design should look like.
 
-![ORBITZ enclosure interior](hardware/orbitz_case_interior.png)  
+order all parts from the Starfield BOM
+solder headers, resistors, the DHT11 module connector, LCD header, LED strip header to the PCB
+Mounts the potentiometer and adjust until the LCD text is clearly visible 
+Attach the 1602 LCD to the enclosure using standoffs
+cut the WS2812B strip to length and mount it around the inside top of the enclosure, then wire it 5v, GND , and the data pin
+Insert the arduino UNO under the shield and secure the PCB in the 3d printed enclosure.
+upload the code and enjoy!
+
+
+![STARFIELD enclosure interior](hardware/STARFIELD ASSEMBLED.png)  
 
 ---
 
 ## 6. Firmware
+The firmware is a single Arduino sketch that runs on the Uno
+Features:
+  Periodically reads DHT11 temperature and humidity
+  computes dew point using a simple approximation formula
+  cycle LCD screens every few seconds (temperature, humidty, dew point)
+  computes dew risk catergory and updates the LED halo color
 
-There are two ways to run ORBITZ:
-
-### 6.1 Desktop/mock firmware (no hardware required)
-
-This runs the radar UI in a Pygame window on any PC or Pi, using mock drivers instead of the real display, LEDs, and buttons.
-
-How to run (Windows / PowerShell):
-
-1. Open a terminal in the `firmware` folder.
-2. `python -m venv .venv`
-3. `.\.venv\Scripts\Activate.ps1`
-4. `pip install -r requirements.txt`
-5. `python main.py`
-
-Controls in mock mode:
-
-- `m` + Enter: toggle between PLANES and SATS/ISS modes.
-- `j` / `k` + Enter: move selection to next/previous target.
-- `q` + Enter: quit.
-
-### 6.2 Hardware firmware (Pi + PCB)
-
-On the Pi Zero 2W with the ORBITZ PCB attached:
-
-- The display shows the radar UI.
-- The rotary encoder controls target selection.
-- The encoder button toggles modes.
-- The LED halo and buzzer reflect visibility/alerts.
-- GPSD and dump1090/readsb are used automatically if available.
+how to flash
+1. open firmware/starfield_wx.ino in the arduino uno
+2. select arduino uno as the board and choose the correct serial port
+3. click upload
+4. after reseting, the splash screen appears, then live readings start
+Feel free to tweak the threshold and LED colors to match your local climate and conditions
 
 ##  7. Images
 
@@ -122,22 +117,21 @@ On the Pi Zero 2W with the ORBITZ PCB attached:
     <td align="center">
       <strong>FINAL PCB SCREENSHOTS</strong><br><br>
       <img width="400" alt="FINAL PCB SCREENSHOTS"
-        src="https://github.com/user-attachments/assets/bd019cbe-858b-401e-93b5-4572d05ddfc6" />
-    </td>
+      src="https://github.com/user-attachments/assets/7b5fe4da-4521-4e2a-a171-5e88641a7de7" />
   </tr>
   <tr>
     <td align="center">
       <strong>PCB</strong><br><br>
       <img width="400" alt="PCB"
-        src="https://github.com/user-attachments/assets/b6102816-e6c7-4078-b330-d672943b4513" />
+        src="https://github.com/user-attachments/assets/2214754b-7cf8-4715-8803-0e71fc0c60cc" />
     </td>
   </tr>
   <tr>
     <td align="center">
       <strong>FINAL BUILD</strong><br><br>
       <img width="300" alt="FINAL BUILD"
-        src="https://github.com/user-attachments/assets/b351456f-1b2b-45ee-8724-4b84135ccd16" />
-    </td>
+        src="https://github.com/user-attachments/assets/9e2097c5-6bb4-4d4d-ba1c-d7aec5207ba7" />
+
   </tr>
 </table>
 
