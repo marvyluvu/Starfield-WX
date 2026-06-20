@@ -146,11 +146,6 @@ It includes part names, descriptions, quantities, prices, and direct purchase li
 
 Key components
 
-| Product name          | Description                                 | Qty |
-| --------------------- | ------------------------------------------- | --- |
-| Arduino Uno           | Main microcontroller board                  | 1   |
-| STARFIELD custom PCB  | Shield that holds all weather‑station parts | 1   |
-| DHT11 module          | Temperature and humidity sensor             | 1   |
-| 1602A LCD display     | 16×2 character display for readings         | 1   |
-| WS2812B LED strip     | RGB halo to show dew‑risk color             | 1   |
-| Trimmer potentiometer | Adjusts LCD contrast                        | 1   |
+### Full BOM (summary)
+
+
