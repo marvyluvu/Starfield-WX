@@ -91,7 +91,7 @@ Insert the arduino UNO under the shield and secure the PCB in the 3d printed enc
 upload the code and enjoy!
 
 
-![STARFIELD enclosure interior](hardware/STARFIELD ASSEMBLED.png)  
+![STARFIELD enclosure interior](hardware/STARFIELD_ASSEMBLED.png)  
 
 ---
 
