@@ -80,13 +80,13 @@ when it turns red, conditions are close to the dew point and you should protect 
 ## ASSEMBLED DESIGN 
 Below is what your fully assembled design should look like.
 
-order all parts from the Starfield BOM
-solder headers, resistors, the DHT11 module connector, LCD header, LED strip header to the PCB
-Mounts the potentiometer and adjust until the LCD text is clearly visible 
-Attach the 1602 LCD to the enclosure using standoffs
-cut the WS2812B strip to length and mount it around the inside top of the enclosure, then wire it 5v, GND , and the data pin
-Insert the arduino UNO under the shield and secure the PCB in the 3d printed enclosure.
-upload the code and enjoy!
+- order all parts from the Starfield BOM
+- solder headers, resistors, the DHT11 module connector, LCD header, LED strip header to the PCB
+- Mounts the potentiometer and adjust until the LCD text is clearly visible 
+- Attach the 1602 LCD to the enclosure using standoffs
+- cut the WS2812B strip to length and mount it around the inside top of the enclosure, then wire it 5v, GND , and the data pin
+- Insert the arduino UNO under the shield and secure the PCB in the 3d printed enclosure.
+- upload the code and enjoy!
 ---
 ## 6. Assembly
 Below is what the fully assembled design should look like.
