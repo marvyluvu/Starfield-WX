@@ -50,11 +50,11 @@ The custom STARFIELD pcb plugs directly onto an Arduino Uno and breaks out all p
 </p>
 
 key pins:
-DHT11 data -> Arduino digital pin 2
-WS2812B LED strip -> Arduino digital pin 6
-1602 LCD (parallel) -> Arduino digital pins 7–12
-Trimmer potentiometer -> LCD contrast
-Series resistors for the LCD backlight and LED strip data line
+-DHT11 data -> Arduino digital pin 2
+-WS2812B LED strip -> Arduino digital pin 6
+-1602 LCD (parallel) -> Arduino digital pins 7–12
+-Trimmer potentiometer -> LCD contrast
+-Series resistors for the LCD backlight and LED strip data line
 
 you can view the full schematic here.
 ![STARFIELD schematic](hardware/starfield_schem.svg)
