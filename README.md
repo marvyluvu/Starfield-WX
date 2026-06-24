@@ -76,17 +76,6 @@ StarField WX boots, then starts cycling through three screens on the LCD:
 The led halo color shows dew risk : green (low), orange ( medium), red (high).
 when it turns red, conditions are close to the dew point and you should protect your optics or wrap up the session , unfortunately :( 
 
-
-## ASSEMBLED DESIGN 
-Below is what your fully assembled design should look like.
-
-- order all parts from the Starfield BOM
-- solder headers, resistors, the DHT11 module connector, LCD header, LED strip header to the PCB
-- Mounts the potentiometer and adjust until the LCD text is clearly visible 
-- Attach the 1602 LCD to the enclosure using standoffs
-- cut the WS2812B strip to length and mount it around the inside top of the enclosure, then wire it 5v, GND , and the data pin
-- Insert the arduino UNO under the shield and secure the PCB in the 3d printed enclosure.
-- upload the code and enjoy!
 ---
 ## 6. Assembly
 Below is what the fully assembled design should look like.
@@ -114,11 +103,12 @@ Features:
 - cycle LCD screens every few seconds (temperature, humidty, dew point)
 - computes dew risk catergory and updates the LED halo color
 
-how to flash
-1. open firmware/starfield_wx.ino in the arduino uno
+## how to flash
+1. open firmware/starfield_wx.ino in the arduino IDE
 2. select arduino uno as the board and choose the correct serial port
-3. click upload.
-4. after reseting, the splash screen appears, then live readings start
+3. Install these libraries (DHT11, NEOPIXELS, LIQUID CRYSTALS) - (see [Arduino Library Installation Guide](https://docs.arduino.cc/software/ide-v1/tutorials/installing-libraries/) to know how to install libraries)
+5. click upload.
+6. after reseting, the splash screen appears, then live readings start
 Feel free to tweak the threshold and LED colors to match your local climate and conditions
 
 ##  8. Images
